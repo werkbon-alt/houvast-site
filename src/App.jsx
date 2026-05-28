@@ -6,7 +6,7 @@ export default function App() {
           <nav style={navStyle}>
             <div style={brandStyle}>
               <img
-                public/038E4D26-E547-43A5-AC81-E92C710FFB77.PNG
+                src="/logo.png"
                 alt="Houvast logo"
                 style={logoStyle}
               />
