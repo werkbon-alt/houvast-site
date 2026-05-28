@@ -6,7 +6,7 @@ export default function App() {
           <nav style={navStyle}>
             <div style={brandStyle}>
               <img
-                src="/logo.png"
+                src="/038E4D26-E547-43A5-AC81-E92C710FFB77.PNG"
                 alt="Houvast logo"
                 style={logoStyle}
               />
@@ -49,7 +49,7 @@ export default function App() {
               Houvast Postmortale Zorg ondersteunt
               uitvaartondernemingen binnen het volledige traject
               tussen overlijden en uitvaart.
-              Professioneel, representatief en 24/7 inzetbaar.
+              Professioneel, betrokken en 24/7 inzetbaar.
             </p>
 
             <div style={buttonRow}>
@@ -74,12 +74,16 @@ export default function App() {
 
           <div style={statCard}>
             <h3 style={statNumber}>Professioneel</h3>
-            <p style={statText}>Representatief en discreet</p>
+            <p style={statText}>
+              Met kennis en betrokkenheid
+            </p>
           </div>
 
           <div style={statCard}>
             <h3 style={statNumber}>Ondersteunend</h3>
-            <p style={statText}>Voor uitvaartondernemingen</p>
+            <p style={statText}>
+              Voor uitvaartondernemingen
+            </p>
           </div>
         </div>
       </section>
@@ -143,18 +147,17 @@ export default function App() {
             </div>
 
             <div style={qualityCard}>
-              <h3>Representatief</h3>
+              <h3>Zorgteam</h3>
               <p>
-                Professioneel handelen
-                met oog voor detail en respect.
+                Ons professioneel betrokken zorgteam
+                denkt graag met u mee.
               </p>
             </div>
 
             <div style={qualityCard}>
-              <h3>Discreet</h3>
+              <h3>Regio gebonden</h3>
               <p>
-                Achter de schermen ondersteunend
-                namens uitvaartondernemingen.
+                Wij zijn werkzaam binnen regio Zuid-Limburg.
               </p>
             </div>
           </div>
@@ -244,7 +247,7 @@ export default function App() {
 
 const services = [
   {
-    title: "Overledenen ophalen",
+    title: "Rouwvervoer",
     text: "Dag en nacht beschikbaar voor overbrengingen namens uitvaartondernemingen.",
   },
   {
@@ -261,7 +264,11 @@ const services = [
   },
   {
     title: "Grafdelving",
-    text: "Zorgvuldig uitgevoerd rondom begraafplaatsen.",
+    text: "Voor alle denkbare werkzaamheden op en rond begraafplaatsen.",
+  },
+  {
+    title: "Balseming / Thanatopraxie",
+    text: "Wij brengen u graag in contact met een gecertificeerd balsemer.",
   },
   {
     title: "Telefoondiensten",
