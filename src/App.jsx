@@ -5,39 +5,58 @@ export default function App() {
         <div style={heroOverlay}>
           <nav style={navStyle}>
             <div style={brandStyle}>
-              <div style={logoMark}>H</div>
+              <img
+                src="/logo.png"
+                alt="Houvast logo"
+                style={logoStyle}
+              />
+
               <div>
-                <strong>Houvast</strong>
-                <div style={brandSub}>postmortale zorg</div>
+                <div style={brandTitle}>Houvast</div>
+                <div style={brandSub}>
+                  postmortale zorg
+                </div>
               </div>
             </div>
 
             <div style={navLinks}>
-              <a style={navLink} href="#diensten">Diensten</a>
-              <a style={navLink} href="#werkwijze">Werkwijze</a>
-              <a style={navLink} href="#contact">Contact</a>
+              <a style={navLink} href="#diensten">
+                Diensten
+              </a>
+
+              <a style={navLink} href="#werkwijze">
+                Werkwijze
+              </a>
+
+              <a style={navLink} href="#contact">
+                Contact
+              </a>
             </div>
           </nav>
 
           <div style={heroContent}>
-            <p style={eyebrow}>NAMENS UITVAARTONDERNEMINGEN</p>
+            <p style={eyebrow}>
+              NAMENS UITVAARTONDERNEMINGEN
+            </p>
 
             <h1 style={heroTitle}>
-              Postmortale zorg met respect en aandacht.
+              Professionele ondersteuning
+              tussen overlijden en uitvaart.
             </h1>
 
             <p style={heroText}>
-              Houvast Postmortale Zorg ondersteunt uitvaartondernemingen
-              in het traject tussen overlijden en uitvaart. Discreet,
-              professioneel en 24 uur per dag inzetbaar.
+              Houvast Postmortale Zorg ondersteunt
+              uitvaartondernemingen bij postmortale zorg,
+              overbrengingen, verzorging en ondersteuning
+              achter de schermen.
             </p>
 
             <div style={buttonRow}>
-              <a style={primaryButton} href="#diensten">
+              <a href="#diensten" style={primaryButton}>
                 Onze dienstverlening
               </a>
 
-              <a style={secondaryButton} href="#contact">
+              <a href="#contact" style={secondaryButton}>
                 Direct contact
               </a>
             </div>
@@ -47,127 +66,105 @@ export default function App() {
 
       <section style={introSection}>
         <div style={introInner}>
-          <p style={sectionEyebrow}>WAT WIJ DOEN</p>
+          <p style={sectionEyebrow}>
+            WAT WIJ DOEN
+          </p>
 
           <h2 style={sectionTitle}>
-            Ondersteuning van overlijden tot aan de dag van de uitvaart.
+            Zorgvuldige ondersteuning
+            van overlijden tot aan de dag van de uitvaart.
           </h2>
 
           <p style={largeText}>
-            Wij verzorgen geen uitvaarten. Houvast Postmortale Zorg ondersteunt
-            uitvaartondernemingen bij de praktische en postmortale zorg rondom
-            overlijden, opbaring en voorbereiding richting uitvaart.
+            Wij verzorgen geen uitvaarten.
+            Houvast ondersteunt uitvaartondernemingen
+            binnen alle facetten van postmortale zorg,
+            opbaring en praktische ondersteuning.
           </p>
         </div>
       </section>
 
       <section id="diensten" style={servicesSection}>
         <div style={sectionHeader}>
-          <p style={sectionEyebrow}>DIENSTVERLENING</p>
-          <h2 style={sectionTitle}>Zorgvuldig, representatief en inzetbaar wanneer nodig.</h2>
+          <p style={sectionEyebrow}>
+            DIENSTVERLENING
+          </p>
+
+          <h2 style={sectionTitle}>
+            Professioneel, representatief en inzetbaar wanneer nodig.
+          </h2>
         </div>
 
         <div style={cardsGrid}>
-          {[
-            [
-              "Overledenen ophalen",
-              "Dag en nacht beschikbaar voor overbrengingen namens uitvaartondernemingen.",
-            ],
-            [
-              "Verzorging",
-              "Respectvolle verzorging met oog voor rust, waardigheid en detail.",
-            ],
-            [
-              "Thuisopbaring",
-              "Ondersteuning bij thuisopbaringen, bedopbaringen en kistopbaringen op locatie.",
-            ],
-            [
-              "Mortuarium dienstverlening",
-              "Professionele ondersteuning binnen mortuaria, verzorgingsruimten en uitvaartcentra.",
-            ],
-            [
-              "Grafdelving",
-              "Discreet en zorgvuldig uitgevoerd rondom begraafplaatsen en voorbereidende werkzaamheden.",
-            ],
-            [
-              "Telefoondiensten",
-              "Overname van bereikbaarheidsdiensten in avond, nacht en weekend.",
-            ],
-          ].map(([title, text]) => (
-            <article style={cardStyle} key={title}>
+          {services.map((service) => (
+            <div key={service.title} style={cardStyle}>
               <div style={cardIcon}>✦</div>
-              <h3 style={cardTitle}>{title}</h3>
-              <p style={cardText}>{text}</p>
-            </article>
+
+              <h3 style={cardTitle}>
+                {service.title}
+              </h3>
+
+              <p style={cardText}>
+                {service.text}
+              </p>
+            </div>
           ))}
         </div>
       </section>
 
-      <section id="werkwijze" style={processSection}>
-        <div style={processInner}>
+      <section id="werkwijze" style={darkSection}>
+        <div style={darkInner}>
           <div>
-            <p style={sectionEyebrowLight}>WERKWIJZE</p>
-            <h2 style={sectionTitleLight}>
+            <p style={sectionEyebrowDark}>
+              WERKWIJZE
+            </p>
+
+            <h2 style={darkTitle}>
               Een betrouwbare partner achter de schermen.
             </h2>
           </div>
 
           <div style={timeline}>
-            {[
-              "Melding overlijden",
-              "Ophalen overledene",
-              "Verzorging",
-              "Opbaring of bewaring",
-              "Overdracht richting uitvaart",
-            ].map((item, index) => (
-              <div style={timelineItem} key={item}>
-                <span style={timelineNumber}>{index + 1}</span>
-                <span>{item}</span>
+            {steps.map((step, index) => (
+              <div key={step} style={timelineItem}>
+                <div style={timelineNumber}>
+                  {index + 1}
+                </div>
+
+                <div>{step}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={whySection}>
-        <div style={sectionHeader}>
-          <p style={sectionEyebrow}>WAAROM HOUVAST</p>
-          <h2 style={sectionTitle}>Rust, discretie en betrouwbaarheid.</h2>
-        </div>
-
-        <div style={whyGrid}>
-          <div style={whyItem}>
-            <h3>24/7 inzetbaar</h3>
-            <p>Dag en nacht beschikbaar wanneer ondersteuning nodig is.</p>
-          </div>
-
-          <div style={whyItem}>
-            <h3>Representatief</h3>
-            <p>Professioneel handelen met respect voor overledene en nabestaanden.</p>
-          </div>
-
-          <div style={whyItem}>
-            <h3>Voor ondernemers</h3>
-            <p>Wij werken in opdracht van uitvaartondernemingen en ondersteunen achter de schermen.</p>
-          </div>
-        </div>
-      </section>
-
       <section id="contact" style={contactSection}>
         <div style={contactCard}>
-          <p style={sectionEyebrow}>CONTACT</p>
+          <p style={sectionEyebrow}>
+            CONTACT
+          </p>
 
-          <h2 style={contactTitle}>Direct ondersteuning nodig?</h2>
+          <h2 style={contactTitle}>
+            Direct ondersteuning nodig?
+          </h2>
 
           <p style={contactText}>
-            Neem contact op met Houvast Postmortale Zorg voor beschikbaarheid,
-            samenwerking of directe ondersteuning.
+            Neem contact op met Houvast
+            Postmortale Zorg voor ondersteuning,
+            samenwerking of beschikbaarheid.
           </p>
 
           <div style={contactDetails}>
-            <p><strong>Telefoon:</strong> 085 400 7800</p>
-            <p><strong>E-mail:</strong> info@houvast-ontzorgen.net</p>
-            <p><strong>Website:</strong> www.houvast-ontzorgen.net</p>
+            <p>
+              <strong>Telefoon:</strong><br />
+              085 400 7800
+            </p>
+
+            <p>
+              <strong>E-mail:</strong><br />
+              info@houvast-ontzorgen.net
+            </p>
+
             <p>
               <strong>Adres:</strong><br />
               Langs de Gewannen 20<br />
@@ -176,11 +173,17 @@ export default function App() {
           </div>
 
           <div style={buttonRowCenter}>
-            <a style={primaryButtonDark} href="tel:0854007800">
+            <a
+              href="tel:0854007800"
+              style={primaryDarkButton}
+            >
               Bel direct
             </a>
 
-            <a style={secondaryButtonDark} href="mailto:info@houvast-ontzorgen.net">
+            <a
+              href="mailto:info@houvast-ontzorgen.net"
+              style={secondaryDarkButton}
+            >
               Stuur e-mail
             </a>
           </div>
@@ -188,24 +191,64 @@ export default function App() {
       </section>
 
       <footer style={footerStyle}>
-        <p>© Houvast Postmortale Zorg</p>
-        <p>Professionele ondersteuning voor uitvaartondernemingen</p>
+        <div>
+          © Houvast Postmortale Zorg
+        </div>
+
+        <div>
+          Professionele ondersteuning voor uitvaartondernemingen
+        </div>
       </footer>
     </main>
   );
 }
 
+const services = [
+  {
+    title: "Overledenen ophalen",
+    text: "Dag en nacht beschikbaar voor overbrengingen namens uitvaartondernemingen.",
+  },
+  {
+    title: "Verzorging",
+    text: "Respectvolle verzorging met aandacht voor rust, waardigheid en detail.",
+  },
+  {
+    title: "Thuisopbaring",
+    text: "Ondersteuning bij thuisopbaringen, bedopbaringen en opbaring op locatie.",
+  },
+  {
+    title: "Mortuarium dienstverlening",
+    text: "Professionele ondersteuning binnen mortuaria en uitvaartcentra.",
+  },
+  {
+    title: "Grafdelving",
+    text: "Discreet en zorgvuldig uitgevoerd rondom begraafplaatsen.",
+  },
+  {
+    title: "Telefoondiensten",
+    text: "Overname van avond-, nacht- en bereikbaarheidsdiensten.",
+  },
+];
+
+const steps = [
+  "Melding overlijden",
+  "Ophalen overledene",
+  "Verzorging",
+  "Opbaring of bewaring",
+  "Overdracht richting uitvaart",
+];
+
 const pageStyle = {
   margin: 0,
-  fontFamily: "Arial, sans-serif",
-  background: "#f5f3ef",
+  background: "#f4f2ee",
   color: "#1f2933",
+  fontFamily: "Arial, sans-serif",
 };
 
 const heroStyle = {
   minHeight: "100vh",
   background:
-    "linear-gradient(rgba(17,24,39,0.72), rgba(17,24,39,0.62)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1800&auto=format&fit=crop') center/cover",
+    "linear-gradient(rgba(16,24,32,0.72), rgba(16,24,32,0.62)), url('https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=1800&auto=format&fit=crop') center/cover",
 };
 
 const heroOverlay = {
@@ -219,72 +262,70 @@ const navStyle = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  flexWrap: "wrap",
   gap: "24px",
-  color: "#fff",
 };
 
 const brandStyle = {
   display: "flex",
   alignItems: "center",
-  gap: "12px",
-  letterSpacing: "0.5px",
+  gap: "14px",
 };
 
-const logoMark = {
-  width: "42px",
-  height: "42px",
-  borderRadius: "50%",
-  background: "rgba(255,255,255,0.18)",
-  border: "1px solid rgba(255,255,255,0.35)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+const logoStyle = {
+  width: "70px",
+  height: "70px",
+  objectFit: "contain",
+};
+
+const brandTitle = {
+  color: "#ffffff",
   fontWeight: "bold",
+  fontSize: "20px",
 };
 
 const brandSub = {
-  fontSize: "13px",
-  color: "#d9e1e8",
+  color: "#d3dce5",
+  fontSize: "14px",
 };
 
 const navLinks = {
   display: "flex",
-  gap: "22px",
+  gap: "24px",
   flexWrap: "wrap",
 };
 
 const navLink = {
-  color: "#fff",
+  color: "#ffffff",
   textDecoration: "none",
   fontSize: "15px",
 };
 
 const heroContent = {
-  maxWidth: "820px",
   marginTop: "auto",
-  marginBottom: "12vh",
-  color: "#fff",
+  marginBottom: "10vh",
+  maxWidth: "820px",
 };
 
 const eyebrow = {
+  color: "#c8d8e5",
   letterSpacing: "4px",
-  color: "#c7d7e3",
   fontSize: "13px",
   marginBottom: "22px",
 };
 
 const heroTitle = {
-  fontSize: "clamp(3.1rem, 8vw, 6.7rem)",
+  fontSize: "clamp(3rem, 8vw, 6.4rem)",
   lineHeight: "1.05",
-  margin: "0 0 28px",
-  fontWeight: 700,
+  color: "#ffffff",
+  marginBottom: "28px",
 };
 
 const heroText = {
+  color: "#e6edf3",
   fontSize: "20px",
   lineHeight: "1.8",
-  color: "#e9eef2",
-  maxWidth: "700px",
+  maxWidth: "680px",
   marginBottom: "40px",
 };
 
@@ -299,25 +340,25 @@ const buttonRowCenter = {
   justifyContent: "center",
   gap: "16px",
   flexWrap: "wrap",
-  marginTop: "30px",
+  marginTop: "40px",
 };
 
 const primaryButton = {
-  background: "#d8e2e9",
-  color: "#111827",
-  padding: "17px 28px",
+  background: "#d7e1e7",
+  color: "#1f2933",
+  padding: "18px 30px",
   borderRadius: "999px",
-  fontWeight: "bold",
   textDecoration: "none",
+  fontWeight: "bold",
 };
 
 const secondaryButton = {
-  border: "1px solid rgba(255,255,255,0.5)",
-  color: "#fff",
-  padding: "17px 28px",
+  border: "1px solid rgba(255,255,255,0.45)",
+  color: "#ffffff",
+  padding: "18px 30px",
   borderRadius: "999px",
-  fontWeight: "bold",
   textDecoration: "none",
+  fontWeight: "bold",
 };
 
 const introSection = {
@@ -331,40 +372,33 @@ const introInner = {
 };
 
 const sectionEyebrow = {
+  color: "#70879a",
   letterSpacing: "4px",
-  color: "#6f8796",
   fontSize: "13px",
   marginBottom: "18px",
 };
 
-const sectionEyebrowLight = {
+const sectionEyebrowDark = {
+  color: "#b7c8d6",
   letterSpacing: "4px",
-  color: "#b8ccd9",
   fontSize: "13px",
   marginBottom: "18px",
 };
 
 const sectionTitle = {
-  fontSize: "clamp(2.2rem, 5vw, 4.2rem)",
+  fontSize: "clamp(2.2rem, 5vw, 4rem)",
   lineHeight: "1.15",
-  margin: "0 0 26px",
-};
-
-const sectionTitleLight = {
-  fontSize: "clamp(2.2rem, 5vw, 4.2rem)",
-  lineHeight: "1.15",
-  margin: "0",
-  color: "#fff",
+  marginBottom: "30px",
 };
 
 const largeText = {
   fontSize: "21px",
   lineHeight: "1.8",
-  color: "#51616c",
+  color: "#596874",
 };
 
 const servicesSection = {
-  padding: "30px 24px 110px",
+  padding: "0 24px 110px",
 };
 
 const sectionHeader = {
@@ -382,145 +416,130 @@ const cardsGrid = {
 };
 
 const cardStyle = {
-  background: "#fff",
+  background: "#ffffff",
   padding: "34px",
   borderRadius: "28px",
-  boxShadow: "0 14px 40px rgba(15,23,42,0.07)",
-  border: "1px solid rgba(15,23,42,0.06)",
+  boxShadow: "0 15px 40px rgba(15,23,42,0.07)",
 };
 
 const cardIcon = {
   color: "#6f8796",
-  fontSize: "24px",
   marginBottom: "18px",
+  fontSize: "22px",
 };
 
 const cardTitle = {
   fontSize: "22px",
-  marginBottom: "12px",
+  marginBottom: "14px",
 };
 
 const cardText = {
-  color: "#5b6872",
-  lineHeight: "1.75",
+  lineHeight: "1.8",
+  color: "#5c6b76",
 };
 
-const processSection = {
+const darkSection = {
   background: "#1f2933",
   padding: "110px 24px",
 };
 
-const processInner = {
+const darkInner = {
   maxWidth: "1100px",
   margin: "0 auto",
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: "50px",
-  alignItems: "start",
+  gap: "60px",
+};
+
+const darkTitle = {
+  color: "#ffffff",
+  fontSize: "clamp(2.2rem, 5vw, 4rem)",
+  lineHeight: "1.15",
 };
 
 const timeline = {
   display: "grid",
-  gap: "16px",
+  gap: "18px",
 };
 
 const timelineItem = {
   background: "rgba(255,255,255,0.08)",
-  color: "#fff",
   padding: "20px",
   borderRadius: "18px",
+  color: "#ffffff",
   display: "flex",
   alignItems: "center",
   gap: "16px",
 };
 
 const timelineNumber = {
-  width: "34px",
-  height: "34px",
+  width: "36px",
+  height: "36px",
   borderRadius: "50%",
-  background: "#d8e2e9",
-  color: "#111827",
+  background: "#d7e1e7",
+  color: "#1f2933",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   fontWeight: "bold",
 };
 
-const whySection = {
+const contactSection = {
   padding: "110px 24px",
 };
 
-const whyGrid = {
-  maxWidth: "1050px",
-  margin: "0 auto",
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-  gap: "24px",
-};
-
-const whyItem = {
-  background: "#eef3f6",
-  padding: "32px",
-  borderRadius: "26px",
-  lineHeight: "1.7",
-};
-
-const contactSection = {
-  padding: "80px 24px 110px",
-};
-
 const contactCard = {
-  maxWidth: "850px",
+  maxWidth: "860px",
   margin: "0 auto",
-  background: "#fff",
-  padding: "48px",
-  borderRadius: "34px",
-  boxShadow: "0 18px 50px rgba(15,23,42,0.09)",
+  background: "#ffffff",
+  borderRadius: "32px",
+  padding: "50px",
   textAlign: "center",
+  boxShadow: "0 15px 40px rgba(15,23,42,0.08)",
 };
 
 const contactTitle = {
   fontSize: "clamp(2.2rem, 5vw, 4rem)",
-  margin: "0 0 20px",
+  marginBottom: "20px",
 };
 
 const contactText = {
-  color: "#5b6872",
+  color: "#5d6a75",
+  lineHeight: "1.8",
   fontSize: "18px",
-  lineHeight: "1.7",
 };
 
 const contactDetails = {
-  marginTop: "30px",
+  marginTop: "34px",
+  lineHeight: "1.9",
   color: "#1f2933",
-  lineHeight: "1.8",
 };
 
-const primaryButtonDark = {
+const primaryDarkButton = {
   background: "#1f2933",
-  color: "#fff",
-  padding: "17px 28px",
+  color: "#ffffff",
+  padding: "18px 30px",
   borderRadius: "999px",
-  fontWeight: "bold",
   textDecoration: "none",
+  fontWeight: "bold",
 };
 
-const secondaryButtonDark = {
-  border: "1px solid rgba(31,41,51,0.25)",
+const secondaryDarkButton = {
+  border: "1px solid rgba(31,41,51,0.2)",
   color: "#1f2933",
-  padding: "17px 28px",
+  padding: "18px 30px",
   borderRadius: "999px",
-  fontWeight: "bold",
   textDecoration: "none",
+  fontWeight: "bold",
 };
 
 const footerStyle = {
   background: "#111827",
-  color: "#d9e1e8",
-  padding: "28px",
+  color: "#d5dde4",
+  padding: "30px",
   display: "flex",
   justifyContent: "space-between",
-  gap: "16px",
   flexWrap: "wrap",
+  gap: "12px",
   fontSize: "14px",
 };
