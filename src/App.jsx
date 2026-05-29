@@ -1,4 +1,22 @@
+import { useState } from "react";
+
 export default function App() {
+  const [password, setPassword] = useState("");
+  const [unlocked, setUnlocked] = useState(false);
+  const [loginError, setLoginError] = useState("");
+
+  function handleLogin(e) {
+    e.preventDefault();
+
+    if (password === "Houvast2026") {
+      setUnlocked(true);
+      setLoginError("");
+      setPassword("");
+    } else {
+      setLoginError("Onjuist wachtwoord.");
+    }
+  }
+
   return (
     <main style={pageStyle}>
       <style>
@@ -78,6 +96,7 @@ export default function App() {
             <div className="hide-mobile" style={navLinks}>
               <a href="#diensten" style={navLink}>Diensten</a>
               <a href="#kwaliteit" style={navLink}>Kwaliteit</a>
+              <a href="#personeel" style={navLink}>Personeel</a>
               <a href="#contact" style={navLink}>Contact</a>
             </div>
           </nav>
@@ -201,6 +220,71 @@ export default function App() {
         </div>
       </section>
 
+      <section id="personeel" style={staffSection}>
+        <div style={staffCard}>
+          <p style={sectionEyebrow}>PERSONEEL</p>
+
+          <h2 style={contactTitle}>Inloggen personeel</h2>
+
+          <p style={contactText}>
+            Toegang voor medewerkers van Houvast.
+          </p>
+
+          {!unlocked ? (
+            <form onSubmit={handleLogin} style={loginForm}>
+              <input
+                type="password"
+                placeholder="Wachtwoord"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={passwordInput}
+              />
+
+              <button type="submit" style={primaryDarkButton}>
+                Inloggen
+              </button>
+
+              {loginError && (
+                <p style={errorText}>{loginError}</p>
+              )}
+            </form>
+          ) : (
+            <div style={staffContent}>
+              <div style={staffActionBox}>
+                <h3>Digitale werkbon</h3>
+                <p>
+                  Open hier de digitale werkbon voor opdrachten onderweg.
+                </p>
+
+                <a
+                  href="https://thriving-lily-981fb3.netlify.app/"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={primaryDarkButton}
+                >
+                  Werkbon openen
+                </a>
+              </div>
+
+              <h3 style={phoneTitle}>Telefoonlijst</h3>
+
+              <div style={phoneGrid}>
+                {phoneNumbers.map((item) => (
+                  <a
+                    key={`${item.name}-${item.phone}`}
+                    href={`tel:${item.phone.replace(/\s/g, "")}`}
+                    style={phoneItem}
+                  >
+                    <strong>{item.name}</strong>
+                    <span>{item.phone}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
       <section style={imageSection}>
         <div style={imageOverlay}>
           <div style={imageContent}>
@@ -227,11 +311,6 @@ export default function App() {
           <div style={contactDetails}>
             <p><strong>Telefoon</strong><br />085 400 7800</p>
             <p><strong>E-mail</strong><br />info@houvast-ontzorgen.net</p>
-            <p>
-              <strong>Adres</strong><br />
-              Langs de Gewannen 20<br />
-              6235 NV Ulestraten
-            </p>
           </div>
 
           <div style={buttonRowCenter}>
@@ -287,6 +366,28 @@ const services = [
     title: "Telefoondiensten",
     text: "Overname van avond-, nacht- en bereikbaarheidsdiensten.",
   },
+];
+
+const phoneNumbers = [
+  { name: "Nicky Thomassen", phone: "0614395169" },
+  { name: "Mike Schellings", phone: "0636517318" },
+  { name: "Gerald Walpot", phone: "0620977499" },
+  { name: "Mortuarium MUMC+", phone: "0622781040" },
+  { name: "Bianca Walczack", phone: "0638092039" },
+  { name: "Funeral Assist Voerendaal", phone: "0455748520" },
+  { name: "Cécile Habets", phone: "0612319175" },
+  { name: "Planning / kantoor", phone: "0854007800" },
+  { name: "Nelleke", phone: "0642721339" },
+  { name: "Walpot Receptie", phone: "0434091244" },
+  { name: "Walpot crematorium agenda", phone: "0434093703" },
+  { name: "Sassen Kantoor", phone: "0433212000" },
+  { name: "Sassen Maurice", phone: "0651644914" },
+  { name: "Sassen Cathelijne", phone: "0620801278" },
+  { name: "Sassen Eelco", phone: "0610900157" },
+  { name: "Sassen Huup", phone: "0651227441" },
+  { name: "Sassen Andre", phone: "0627412460" },
+  { name: "Walpot Marc", phone: "0653912321" },
+  { name: "Walpot Angelique", phone: "0627061456" },
 ];
 
 const pageStyle = {
@@ -578,6 +679,79 @@ const qualityCard = {
   lineHeight: "1.8",
 };
 
+const staffSection = {
+  padding: "120px 24px",
+  background: "#eef3f6",
+};
+
+const staffCard = {
+  maxWidth: "980px",
+  margin: "0 auto",
+  background: "#ffffff",
+  borderRadius: "34px",
+  padding: "54px",
+  textAlign: "center",
+  boxShadow: "0 15px 40px rgba(15,23,42,0.08)",
+};
+
+const loginForm = {
+  marginTop: "30px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "14px",
+  flexWrap: "wrap",
+};
+
+const passwordInput = {
+  padding: "17px 20px",
+  borderRadius: "999px",
+  border: "1px solid rgba(31,41,51,0.22)",
+  fontSize: "16px",
+  minWidth: "240px",
+};
+
+const errorText = {
+  width: "100%",
+  color: "#b91c1c",
+  fontWeight: "bold",
+};
+
+const staffContent = {
+  marginTop: "36px",
+};
+
+const staffActionBox = {
+  background: "#f4f1eb",
+  borderRadius: "28px",
+  padding: "34px",
+  marginBottom: "40px",
+};
+
+const phoneTitle = {
+  fontSize: "28px",
+  marginBottom: "24px",
+};
+
+const phoneGrid = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+  gap: "14px",
+  textAlign: "left",
+};
+
+const phoneItem = {
+  background: "#f8fafc",
+  color: "#1f2933",
+  textDecoration: "none",
+  padding: "18px",
+  borderRadius: "18px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "6px",
+  border: "1px solid rgba(31,41,51,0.08)",
+};
+
 const imageSection = {
   minHeight: "70vh",
   background:
@@ -642,6 +816,9 @@ const primaryDarkButton = {
   borderRadius: "999px",
   textDecoration: "none",
   fontWeight: "bold",
+  border: "none",
+  cursor: "pointer",
+  display: "inline-block",
 };
 
 const secondaryDarkButton = {
