@@ -1,8 +1,70 @@
 export default function App() {
   return (
     <main style={pageStyle}>
-      <section style={heroStyle}>
-        <div style={overlayStyle}>
+      <style>
+        {`
+          html {
+            scroll-behavior: smooth;
+          }
+
+          @keyframes fadeUp {
+            from {
+              opacity: 0;
+              transform: translateY(24px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @keyframes slowZoom {
+            from {
+              transform: scale(1);
+            }
+            to {
+              transform: scale(1.06);
+            }
+          }
+
+          .fade-up {
+            animation: fadeUp 1s ease forwards;
+          }
+
+          .hero-bg {
+            animation: slowZoom 18s ease-in-out infinite alternate;
+          }
+
+          .premium-card {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+          }
+
+          .premium-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 60px rgba(15,23,42,0.12);
+          }
+
+          .premium-button {
+            transition: transform 0.25s ease, opacity 0.25s ease;
+          }
+
+          .premium-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.88;
+          }
+
+          @media (max-width: 700px) {
+            .hide-mobile {
+              display: none !important;
+            }
+          }
+        `}
+      </style>
+
+      <section style={heroWrapper}>
+        <div className="hero-bg" style={heroBackground} />
+
+        <div style={heroOverlay}>
           <nav style={navStyle}>
             <div style={brandStyle}>
               <img src="/logo.png" alt="Houvast logo" style={logoStyle} />
@@ -13,14 +75,14 @@ export default function App() {
               </div>
             </div>
 
-            <div style={navLinks}>
+            <div className="hide-mobile" style={navLinks}>
               <a href="#diensten" style={navLink}>Diensten</a>
               <a href="#kwaliteit" style={navLink}>Kwaliteit</a>
               <a href="#contact" style={navLink}>Contact</a>
             </div>
           </nav>
 
-          <div style={heroContent}>
+          <div className="fade-up" style={heroContent}>
             <p style={eyebrow}>
               PROFESSIONELE ONDERSTEUNING VOOR UITVAARTONDERNEMINGEN
             </p>
@@ -36,8 +98,13 @@ export default function App() {
             </p>
 
             <div style={buttonRow}>
-              <a href="#diensten" style={primaryButton}>Bekijk dienstverlening</a>
-              <a href="#contact" style={secondaryButton}>Direct contact</a>
+              <a className="premium-button" href="#diensten" style={primaryButton}>
+                Bekijk dienstverlening
+              </a>
+
+              <a className="premium-button" href="#contact" style={secondaryButton}>
+                Direct contact
+              </a>
             </div>
           </div>
         </div>
@@ -45,20 +112,37 @@ export default function App() {
 
       <section style={statsSection}>
         <div style={statsGrid}>
-          <div style={statCard}>
+          <div className="premium-card" style={statCard}>
             <h3 style={statNumber}>24/7</h3>
             <p style={statText}>Bereikbaar en inzetbaar</p>
           </div>
 
-          <div style={statCard}>
+          <div className="premium-card" style={statCard}>
             <h3 style={statNumber}>Professioneel</h3>
             <p style={statText}>Met kennis en betrokkenheid</p>
           </div>
 
-          <div style={statCard}>
-            <h3 style={statNumber}>Ondersteunend</h3>
-            <p style={statText}>Voor uitvaartondernemingen</p>
+          <div className="premium-card" style={statCard}>
+            <h3 style={statNumber}>Zuid-Limburg</h3>
+            <p style={statText}>Regio gebonden ondersteuning</p>
           </div>
+        </div>
+      </section>
+
+      <section style={introSection}>
+        <div style={introInner}>
+          <p style={sectionEyebrow}>WAT WIJ DOEN</p>
+
+          <h2 style={sectionTitle}>
+            Wij ondersteunen uitvaartondernemingen achter de schermen.
+          </h2>
+
+          <p style={largeText}>
+            Houvast verzorgt geen uitvaarten. Wij ondersteunen
+            uitvaartondernemingen bij rouwvervoer, verzorging, opbaring,
+            mortuariumwerkzaamheden, begraafplaatswerkzaamheden en
+            bereikbaarheidsdiensten.
+          </p>
         </div>
       </section>
 
@@ -73,11 +157,11 @@ export default function App() {
 
         <div style={cardsGrid}>
           {services.map((service) => (
-            <div key={service.title} style={cardStyle}>
+            <article className="premium-card" key={service.title} style={cardStyle}>
               <div style={cardIcon}>✦</div>
               <h3 style={cardTitle}>{service.title}</h3>
               <p style={cardText}>{service.text}</p>
-            </div>
+            </article>
           ))}
         </div>
       </section>
@@ -121,6 +205,7 @@ export default function App() {
         <div style={imageOverlay}>
           <div style={imageContent}>
             <p style={sectionEyebrowLight}>SAMENWERKING</p>
+
             <h2 style={imageTitle}>
               Ondersteuning waarop uitvaartondernemingen kunnen bouwen.
             </h2>
@@ -150,8 +235,15 @@ export default function App() {
           </div>
 
           <div style={buttonRowCenter}>
-            <a href="tel:0854007800" style={primaryDarkButton}>Bel direct</a>
-            <a href="mailto:info@houvast-ontzorgen.net" style={secondaryDarkButton}>
+            <a className="premium-button" href="tel:0854007800" style={primaryDarkButton}>
+              Bel direct
+            </a>
+
+            <a
+              className="premium-button"
+              href="mailto:info@houvast-ontzorgen.net"
+              style={secondaryDarkButton}
+            >
               Stuur e-mail
             </a>
           </div>
@@ -204,14 +296,22 @@ const pageStyle = {
   fontFamily: "Arial, sans-serif",
 };
 
-const heroStyle = {
+const heroWrapper = {
   minHeight: "100vh",
-  background:
-    "linear-gradient(rgba(15,20,28,0.52), rgba(15,20,28,0.42)), url('/branding-bg.jpg') center/cover",
   position: "relative",
+  overflow: "hidden",
 };
 
-const overlayStyle = {
+const heroBackground = {
+  position: "absolute",
+  inset: 0,
+  background:
+    "linear-gradient(rgba(15,20,28,0.54), rgba(15,20,28,0.44)), url('/branding-bg.jpg') center/cover",
+};
+
+const heroOverlay = {
+  position: "relative",
+  zIndex: 1,
   minHeight: "100vh",
   padding: "30px",
   display: "flex",
@@ -234,8 +334,8 @@ const brandStyle = {
 };
 
 const logoStyle = {
-  width: "76px",
-  height: "76px",
+  width: "78px",
+  height: "78px",
   objectFit: "contain",
 };
 
@@ -246,14 +346,13 @@ const brandTitle = {
 };
 
 const brandSub = {
-  color: "#d5dde5",
+  color: "#e7edf1",
   fontSize: "14px",
 };
 
 const navLinks = {
   display: "flex",
   gap: "24px",
-  flexWrap: "wrap",
 };
 
 const navLink = {
@@ -265,7 +364,7 @@ const navLink = {
 const heroContent = {
   marginTop: "auto",
   marginBottom: "12vh",
-  maxWidth: "860px",
+  maxWidth: "900px",
 };
 
 const eyebrow = {
@@ -287,7 +386,7 @@ const heroText = {
   color: "#f0f4f6",
   fontSize: "22px",
   lineHeight: "1.8",
-  maxWidth: "720px",
+  maxWidth: "760px",
   marginBottom: "42px",
   textShadow: "0 8px 24px rgba(0,0,0,0.35)",
 };
@@ -357,8 +456,24 @@ const statText = {
   color: "#62707b",
 };
 
+const introSection = {
+  padding: "120px 24px 40px",
+};
+
+const introInner = {
+  maxWidth: "980px",
+  margin: "0 auto",
+  textAlign: "center",
+};
+
+const largeText = {
+  fontSize: "21px",
+  lineHeight: "1.8",
+  color: "#5f6d78",
+};
+
 const servicesSection = {
-  padding: "120px 24px",
+  padding: "90px 24px 120px",
 };
 
 const sectionHeader = {
