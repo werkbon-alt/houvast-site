@@ -60,6 +60,25 @@ const phoneNumbers = [
   { name: "Walpot Angelique", phone: "0627061456" },
 ];
 
+function formatDate(value) {
+  if (!value) return "-";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString("nl-NL");
+}
+
+function formatTime(value) {
+  if (!value) return "-";
+  const date = new Date(value);
+  if (!Number.isNaN(date.getTime()) && value.includes("T")) {
+    return date.toLocaleTimeString("nl-NL", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+  return value;
+}
+
 export default function App() {
   const [staffPassword, setStaffPassword] = useState("");
   const [staffUnlocked, setStaffUnlocked] = useState(false);
@@ -74,6 +93,13 @@ export default function App() {
   const urenItems = useMemo(() => {
     if (!adminData?.urenPerMedewerker) return [];
     return Object.entries(adminData.urenPerMedewerker).sort(
+      (a, b) => Number(b[1]) - Number(a[1])
+    );
+  }, [adminData]);
+
+  const opdrachtgeverItems = useMemo(() => {
+    if (!adminData?.opdrachtenPerOpdrachtgever) return [];
+    return Object.entries(adminData.opdrachtenPerOpdrachtgever).sort(
       (a, b) => Number(b[1]) - Number(a[1])
     );
   }, [adminData]);
@@ -282,8 +308,9 @@ export default function App() {
             <p className="section-label light">Administratie</p>
             <h2>Houvast administratie dashboard</h2>
             <p>
-              Intern overzicht van digitale werkbonnen en geregistreerde uren.
-              De gegevens worden rechtstreeks opgehaald uit de Google Sheet.
+              Intern overzicht van digitale werkbonnen, opdrachtgevers en
+              geregistreerde uren. De gegevens worden rechtstreeks opgehaald uit
+              de Google Sheet.
             </p>
           </div>
 
@@ -313,43 +340,101 @@ export default function App() {
                   <strong>{totaalUren.toFixed(2)}</strong>
                 </article>
                 <article>
-                  <span>Medewerkers met uren</span>
-                  <strong>{urenItems.length}</strong>
+                  <span>Opdrachtgevers</span>
+                  <strong>{opdrachtgeverItems.length}</strong>
                 </article>
               </div>
 
-              <div className="admin-panel">
+              <div className="admin-two-column">
+                <div className="admin-panel">
+                  <div className="admin-panel-header">
+                    <div>
+                      <p className="section-label">Urenoverzicht</p>
+                      <h3>Uren per medewerker</h3>
+                    </div>
+                  </div>
+
+                  {urenItems.length === 0 ? (
+                    <p>Er zijn nog geen uren geregistreerd.</p>
+                  ) : (
+                    <div className="hours-list">
+                      {urenItems.map(([name, hours]) => (
+                        <div className="hours-row" key={name}>
+                          <div>
+                            <strong>{name}</strong>
+                            <span>Geregistreerde uren</span>
+                          </div>
+                          <strong>{Number(hours).toFixed(2)} uur</strong>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="admin-panel">
+                  <div className="admin-panel-header">
+                    <div>
+                      <p className="section-label">Opdrachtgevers</p>
+                      <h3>Opdrachten per opdrachtgever</h3>
+                    </div>
+                  </div>
+
+                  {opdrachtgeverItems.length === 0 ? (
+                    <p>Er zijn nog geen opdrachtgevers geregistreerd.</p>
+                  ) : (
+                    <div className="hours-list">
+                      {opdrachtgeverItems.map(([name, amount]) => (
+                        <div className="hours-row" key={name}>
+                          <div>
+                            <strong>{name}</strong>
+                            <span>Ingediende werkbonnen</span>
+                          </div>
+                          <strong>{amount}</strong>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="admin-panel full-width">
                 <div className="admin-panel-header">
                   <div>
-                    <p className="section-label">Urenoverzicht</p>
-                    <h3>Uren per medewerker</h3>
+                    <p className="section-label">Werkbonnen</p>
+                    <h3>Laatste 10 werkbonnen</h3>
                   </div>
                   <a href={SHEET_URL} target="_blank" rel="noreferrer">
                     Open Google Sheet
                   </a>
                 </div>
 
-                {urenItems.length === 0 ? (
-                  <p>Er zijn nog geen uren geregistreerd.</p>
+                {!adminData?.laatsteWerkbonnen?.length ? (
+                  <p>Er zijn nog geen werkbonnen beschikbaar.</p>
                 ) : (
-                  <div className="hours-list">
-                    {urenItems.map(([name, hours]) => (
-                      <div className="hours-row" key={name}>
-                        <div>
-                          <strong>{name}</strong>
-                          <span>Geregistreerde uren</span>
+                  <div className="workorders-list">
+                    {adminData.laatsteWerkbonnen.map((item) => (
+                      <article className="workorder-row" key={item.werkbonnummer}>
+                        <div className="workorder-top">
+                          <strong>{item.werkbonnummer}</strong>
+                          <span>{formatDate(item.datum)}</span>
                         </div>
-                        <strong>{Number(hours).toFixed(2)} uur</strong>
-                      </div>
+                        <div className="workorder-grid">
+                          <span><b>Opdrachtgever:</b> {item.opdrachtgever || "-"}</span>
+                          <span><b>Medewerkers:</b> {[item.medewerker1, item.medewerker2].filter(Boolean).join(" & ") || "-"}</span>
+                          <span><b>Tijd:</b> {formatTime(item.starttijd)} - {formatTime(item.eindtijd)}</span>
+                          <span><b>Uren:</b> {item.uren || "-"}</span>
+                          <span><b>Overledene:</b> {item.naamOverledene || "-"}</span>
+                          <span><b>Handelingen:</b> {item.handelingen || "-"}</span>
+                        </div>
+                      </article>
                     ))}
                   </div>
                 )}
               </div>
 
               <p className="admin-note">
-                Versie 1 van het administratieportaal. Later kunnen hier
-                werkbonoverzicht, opdrachtgevers, maandfilters, export en
-                facturatievoorbereiding aan worden toegevoegd.
+                Versie 2 van het administratieportaal. Later kunnen hier
+                maandfilters, export en facturatievoorbereiding aan worden toegevoegd.
               </p>
             </div>
           )}
@@ -481,7 +566,9 @@ const styles = `
   .metric-grid article { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 28px; padding: 30px; color: #fff; }
   .metric-grid span { color: #b8c8d6; display: block; margin-bottom: 12px; }
   .metric-grid strong { font-size: 42px; line-height: 1; }
+  .admin-two-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
   .admin-panel { background: #fff; border-radius: 34px; padding: 36px; box-shadow: 0 20px 60px rgba(0,0,0,.16); }
+  .admin-panel.full-width { width: 100%; }
   .admin-panel-header { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 24px; }
   .admin-panel-header h3 { font-size: 30px; margin: 0; }
   .admin-panel-header a { background: #1f2933; color: #fff; padding: 14px 22px; border-radius: 999px; text-decoration: none; font-weight: bold; }
@@ -489,6 +576,12 @@ const styles = `
   .hours-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: #f8fafc; border: 1px solid rgba(31,41,51,.08); border-radius: 18px; padding: 18px; }
   .hours-row span { display: block; margin-top: 4px; color: #6b7280; font-size: 14px; }
   .hours-row > strong { font-size: 20px; }
+  .workorders-list { display: grid; gap: 14px; }
+  .workorder-row { background: #f8fafc; border: 1px solid rgba(31,41,51,.08); border-radius: 20px; padding: 18px; }
+  .workorder-top { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+  .workorder-top strong { font-size: 18px; }
+  .workorder-top span { color: #6b7280; }
+  .workorder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; color: #374151; line-height: 1.5; }
   .admin-note { color: #cbd5e1; font-size: 14px; line-height: 1.7; }
 
   .image-section { min-height: 70vh; background: linear-gradient(rgba(18,24,32,.45), rgba(18,24,32,.45)), url('/branding-bg.jpg') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; }
@@ -503,5 +596,6 @@ const styles = `
     .hero-content p:not(.eyebrow) { font-size: 18px; }
     .portal-card, .contact-card, .admin-panel { padding: 28px; }
     .admin-section, .portal-section, .contact-section, .dark-section { padding: 80px 18px; }
+    .workorder-top { flex-direction: column; gap: 4px; }
   }
 `;
