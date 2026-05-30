@@ -79,6 +79,35 @@ function formatTime(value) {
   return value;
 }
 
+function PeriodPanel({ title, items, empty }) {
+  return (
+    <div className="admin-panel period-panel">
+      <div className="admin-panel-header compact">
+        <div>
+          <p className="section-label">Periode</p>
+          <h3>{title}</h3>
+        </div>
+      </div>
+
+      {items.length === 0 ? (
+        <p>{empty}</p>
+      ) : (
+        <div className="hours-list">
+          {items.map(([name, hours]) => (
+            <div className="hours-row" key={`${title}-${name}`}>
+              <div>
+                <strong>{name}</strong>
+                <span>Geregistreerde uren</span>
+              </div>
+              <strong>{Number(hours).toFixed(2)} uur</strong>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function App() {
   const [staffPassword, setStaffPassword] = useState("");
   const [staffUnlocked, setStaffUnlocked] = useState(false);
@@ -100,6 +129,27 @@ export default function App() {
   const opdrachtgeverItems = useMemo(() => {
     if (!adminData?.opdrachtenPerOpdrachtgever) return [];
     return Object.entries(adminData.opdrachtenPerOpdrachtgever).sort(
+      (a, b) => Number(b[1]) - Number(a[1])
+    );
+  }, [adminData]);
+
+  const weekItems = useMemo(() => {
+    if (!adminData?.urenDezeWeek) return [];
+    return Object.entries(adminData.urenDezeWeek).sort(
+      (a, b) => Number(b[1]) - Number(a[1])
+    );
+  }, [adminData]);
+
+  const maandItems = useMemo(() => {
+    if (!adminData?.urenDezeMaand) return [];
+    return Object.entries(adminData.urenDezeMaand).sort(
+      (a, b) => Number(b[1]) - Number(a[1])
+    );
+  }, [adminData]);
+
+  const jaarItems = useMemo(() => {
+    if (!adminData?.urenDitJaar) return [];
+    return Object.entries(adminData.urenDitJaar).sort(
       (a, b) => Number(b[1]) - Number(a[1])
     );
   }, [adminData]);
@@ -336,21 +386,31 @@ export default function App() {
                   <strong>{adminData?.totaalWerkbonnen || 0}</strong>
                 </article>
                 <article>
-                  <span>Totaal geregistreerde uren</span>
-                  <strong>{totaalUren.toFixed(2)}</strong>
+                  <span>Uren deze week</span>
+                  <strong>{Number(adminData?.totaalUrenDezeWeek || 0).toFixed(2)}</strong>
                 </article>
                 <article>
-                  <span>Opdrachtgevers</span>
-                  <strong>{opdrachtgeverItems.length}</strong>
+                  <span>Uren deze maand</span>
+                  <strong>{Number(adminData?.totaalUrenDezeMaand || 0).toFixed(2)}</strong>
                 </article>
+                <article>
+                  <span>Uren dit jaar</span>
+                  <strong>{Number(adminData?.totaalUrenDitJaar || 0).toFixed(2)}</strong>
+                </article>
+              </div>
+
+              <div className="admin-three-column">
+                <PeriodPanel title="Deze week" items={weekItems} empty="Geen uren deze week." />
+                <PeriodPanel title="Deze maand" items={maandItems} empty="Geen uren deze maand." />
+                <PeriodPanel title="Dit jaar" items={jaarItems} empty="Geen uren dit jaar." />
               </div>
 
               <div className="admin-two-column">
                 <div className="admin-panel">
                   <div className="admin-panel-header">
                     <div>
-                      <p className="section-label">Urenoverzicht</p>
-                      <h3>Uren per medewerker</h3>
+                      <p className="section-label">Uren totaal</p>
+                      <h3>Alle geregistreerde uren</h3>
                     </div>
                   </div>
 
@@ -362,7 +422,7 @@ export default function App() {
                         <div className="hours-row" key={name}>
                           <div>
                             <strong>{name}</strong>
-                            <span>Geregistreerde uren</span>
+                            <span>Totaal geregistreerd</span>
                           </div>
                           <strong>{Number(hours).toFixed(2)} uur</strong>
                         </div>
@@ -567,10 +627,13 @@ const styles = `
   .metric-grid span { color: #b8c8d6; display: block; margin-bottom: 12px; }
   .metric-grid strong { font-size: 42px; line-height: 1; }
   .admin-two-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  .admin-three-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .admin-panel { background: #fff; border-radius: 34px; padding: 36px; box-shadow: 0 20px 60px rgba(0,0,0,.16); }
   .admin-panel.full-width { width: 100%; }
   .admin-panel-header { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 24px; }
   .admin-panel-header h3 { font-size: 30px; margin: 0; }
+  .admin-panel-header.compact h3 { font-size: 24px; }
+  .period-panel { padding: 28px; }
   .admin-panel-header a { background: #1f2933; color: #fff; padding: 14px 22px; border-radius: 999px; text-decoration: none; font-weight: bold; }
   .hours-list { display: grid; gap: 12px; }
   .hours-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: #f8fafc; border: 1px solid rgba(31,41,51,.08); border-radius: 18px; padding: 18px; }
