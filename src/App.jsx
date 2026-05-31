@@ -378,14 +378,9 @@ export default function App() {
 
       <section id="administratie" className="admin-section">
         <div className="admin-shell">
-          <div className="admin-intro">
-            <p className="section-label light">Administratie</p>
-            <h2>Houvast administratie dashboard</h2>
-            <p>
-              Intern overzicht van digitale werkbonnen, opdrachtgevers,
-              weekuren, maanduren, jaaruren en facturatievoorbereiding.
-            </p>
-          </div>
+<div className="admin-intro">
+  <h2>Administratie dashboard</h2>
+</div>
 
           {!adminUnlocked ? (
             <form className="admin-login" onSubmit={handleAdminLogin}>
