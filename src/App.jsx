@@ -4,7 +4,7 @@ const ADMIN_API_URL =
   "https://script.google.com/macros/s/AKfycbzgTXIHhPWgCCDCYOiWfywCYT0mU6Ix-XC9y9qd1s7RunEKIwh45ZFEKRFged2ZMOZ2/exec";
 
 const WERKBON_URL = "https://thriving-lily-981fb3.netlify.app/";
-const PLANNING_URL = "https://JOUW-PLANNING-LINK.netlify.app/";
+const PLANNING_URL = "https://effervescent-elf-77f68d.netlify.app/";
 
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/1b_VWF9JCin55pErob3syvm7u25RLkG9YB4GJkSO5CPA/edit?usp=sharing";
